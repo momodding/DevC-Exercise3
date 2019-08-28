@@ -17,6 +17,15 @@
       <div class="row">
         <div class="col-md-8 mx-auto">
           <div class="card shadow-lg border-0">
+            <div class="card-header">
+              <input
+                type="text"
+                name="filter"
+                id=""
+                placeholder="filter..."
+                onchange="filter(this.value)"
+              />
+            </div>
             <div class="card-body">
               <table id="planet_table" class="table">
                 <thead>
@@ -42,33 +51,62 @@
       </div>
     </div>
     <script>
-      async function getPlanet() {
-        let result = await fetch("https://swapi.co/api/planets/");
+      async function getPlanet(search) {
+        // console.log(search);
+        let result;
+        if (search === "") {
+          result = await fetch("https://swapi.co/api/planets/");
+        } else {
+          result = await fetch(
+            "https://swapi.co/api/planets/?search=" + search
+          );
+        }
         let data = await result.json();
-        return data;
+        return data.results;
+      }
+
+      function fillTable(data) {
+        document.querySelector("#planet_table tbody").innerHTML = "";
+        for (let i = 0; i < data.length; i++) {
+          document.querySelector("#planet_table tbody").innerHTML +=
+            "<tr>" +
+            '<th scope="row">' +
+            (i + 1) +
+            "</th>" +
+            "<td>" +
+            data[i].name +
+            "</td>" +
+            "<td>" +
+            data[i].rotation_period +
+            "</td>" +
+            "<td>" +
+            data[i].orbital_period +
+            "</td>" +
+            "</tr>";
+        }
+      }
+      function filter(params) {
+        getPlanet(params).then(function(data) {
+          if (data) {
+            fillTable(data);
+          } else {
+            alert("Data not found");
+          }
+        });
       }
       (function() {
-        getPlanet().then(function(data) {
-          for (let i = 0; i < data.results.length; i++) {
-            document.querySelector("#planet_table tbody").innerHTML +=
-              "<tr>" +
-              '<th scope="row">' +
-              (i + 1) +
-              "</th>" +
-              "<td>" +
-              data.results[i].name +
-              "</td>" +
-              "<td>" +
-              data.results[i].rotation_period +
-              "</td>" +
-              "<td>" +
-              data.results[i].orbital_period +
-              "</td>" +
-              "</tr>";
+        // console.log(dataset);
+        getPlanet("").then(function(data) {
+          // console.log(data);
+          if (data) {
+            fillTable(data);
+          } else {
+            alert("Data not found");
           }
         });
       })();
     </script>
+    <script src="./source.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
       integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

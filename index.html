@@ -27,13 +27,19 @@
               />
             </div>
             <div class="card-body">
-              <table id="planet_table" class="table">
+              <table id="planet_table" class=".table-responsive">
                 <thead>
                   <tr>
                     <th scope="col">No</th>
                     <th scope="col">Planet Name</th>
                     <th scope="col">Planet Rotational Period</th>
                     <th scope="col">Planet Orbital Period</th>
+                    <th scope="col">Planet diameter</th>
+                    <th scope="col">Planet climate</th>
+                    <th scope="col">Planet gravity</th>
+                    <th scope="col">Planet terrain</th>
+                    <th scope="col">Planet surface_water</th>
+                    <th scope="col">Planet population</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -81,6 +87,24 @@
             "</td>" +
             "<td>" +
             data[i].orbital_period +
+            "</td>" +
+            "<td>" +
+            data[i].diameter +
+            "</td>" +
+            "<td>" +
+            data[i].climate +
+            "</td>" +
+            "<td>" +
+            data[i].gravity +
+            "</td>" +
+            "<td>" +
+            data[i].terrain +
+            "</td>" +
+            "<td>" +
+            data[i].surface_water +
+            "</td>" +
+            "<td>" +
+            data[i].population +
             "</td>" +
             "</tr>";
         }
